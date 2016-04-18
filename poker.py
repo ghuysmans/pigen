@@ -2,6 +2,9 @@
 
 class Poker(object):
 	def process(self, digits):
+		"""
+		Process k digits in the given array.
+		"""
 		flags = [False for _ in range(self.d)]
 		count = 0 #different values = class
 		assert(len(digits) == self.k)
@@ -11,9 +14,12 @@ class Poker(object):
 				count += 1
 		self.classes[count-1] += 1
 	def __init__(self, k):
+		"""
+		Create an object processing blocks of k digits.
+		"""
 		self.k = k
 		self.d = 10
-		self.classes = [0 for _ in range(self.d)]
+		self.classes = [0 for _ in range(min(self.d, k))]
 
 def read(stream, k, wait_point=True):
 	poker = Poker(k)
