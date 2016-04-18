@@ -21,21 +21,46 @@ class Poker(object):
 		self.d = 10
 		self.classes = [0 for _ in range(min(self.d, k))]
 
-def read(stream, k, wait_point=True):
-	poker = Poker(k)
+def clean(stream, until):
+	"""
+	Discard bytes from the given stream until a character is found.
+	"""
 	while True:
+		c = stream.read(1)
+		if c in ["", until]:
+			break
+
+def read(stream, k, n):
+	"""
+	Process n blocks of k digits from a stream.
+	Returns whether there is maybe more data.
+	"""
+	poker = Poker(k)
+	while n>0:
 		l = []
 		while len(l)<k:
 			c = stream.read(1)
 			if c == "":
-				return poker.classes
-			elif c == ".":
-				wait_point = False
-			elif c.isdigit() and not wait_point:
+				return poker.classes, False
+			elif c.isdigit():
 				l.append(int(c))
 		poker.process(l)
-	return poker.classes
+		n -= 1
+	return poker.classes, True
 
-import sys
-k=5
-print read(sys.stdin, k)
+
+if __name__ == "__main__":
+	import sys
+	import argparse
+	parser = argparse.ArgumentParser()
+	parser.add_argument("k", type=int, help="block size: 5?")
+	parser.add_argument("n", type=int, help="test size: 1000?")
+	parser.add_argument("--decimals", action="store_true")
+	args = parser.parse_args()
+	if args.decimals:
+		clean(sys.stdin, ".")
+	cont=True
+	while cont:
+		l, cont = read(sys.stdin, args.k, args.n)
+		if cont:
+			print "\t".join(map(str, l))
