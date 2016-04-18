@@ -13,12 +13,23 @@ class Poker(object):
 				flags[digit] = True
 				count += 1
 		self.classes[count-1] += 1
+	def probabilities(self):
+		l = []
+		dprod = self.d
+		denom = self.d**self.k
+		d = self.d
+		for r in range(1, d+1):
+			l.append(stir(self.k, r) * float(dprod) / denom)
+			d = d - 1
+			dprod *= d
+		return l
 	def __init__(self, k):
 		"""
 		Create an object processing blocks of k digits.
 		"""
 		self.k = k
 		self.d = 10
+		assert(k>=self.d)
 		self.classes = [0 for _ in range(min(self.d, k))]
 
 def clean(stream, until):
@@ -29,6 +40,14 @@ def clean(stream, until):
 		c = stream.read(1)
 		if c in ["", until]:
 			break
+
+def stir(k,r):
+	assert(k>0)
+	assert(r>0)
+	if k == r or r == 1:
+		return 1
+	else:
+		return stir(k-1,r-1) + r*stir(k-1,r)
 
 def read(stream, k, n):
 	"""
@@ -53,7 +72,7 @@ if __name__ == "__main__":
 	import sys
 	import argparse
 	parser = argparse.ArgumentParser()
-	parser.add_argument("k", type=int, help="block size: 5?")
+	parser.add_argument("k", type=int, help="block size: 10?")
 	parser.add_argument("n", type=int, help="test size: 1000?")
 	parser.add_argument("--decimals", action="store_true")
 	args = parser.parse_args()
@@ -64,3 +83,7 @@ if __name__ == "__main__":
 		l, cont = read(sys.stdin, args.k, args.n)
 		if cont:
 			print "\t".join(map(str, l))
+	print "expected:"
+	def f(x):
+		return str(int(args.n*x))
+	print "\t".join(map(f, Poker(args.k).probabilities()))
