@@ -16,7 +16,7 @@ def real(stream, d):
 	"""
 	acc = 0
 	while d>0:
-		digit = stream.read(d)
+		digit = stream.read(1)
 		if not digit:
 			return
 		elif digit.isdigit():
