@@ -1,4 +1,5 @@
 #!/usr/bin/env python2
+from scipy.stats import chisquare
 
 class Poker(object):
 	def process(self, digits):
@@ -14,6 +15,7 @@ class Poker(object):
 				count += 1
 		self.classes[count-1] += 1
 	def probabilities(self):
+		#TODO extract this
 		l = []
 		dprod = self.d
 		denom = self.d**self.k
@@ -67,6 +69,9 @@ def read(stream, k, n):
 		n -= 1
 	return poker.classes, True
 
+def regroup(l):
+	return [sum(l[:4])+sum(l[-2:])] + l[4:-2]
+
 
 if __name__ == "__main__":
 	import sys
@@ -74,16 +79,24 @@ if __name__ == "__main__":
 	parser = argparse.ArgumentParser()
 	parser.add_argument("k", type=int, help="block size: 10?")
 	parser.add_argument("n", type=int, help="test size: 1000?")
+	parser.add_argument("--alpha", type=float, help="alpha test value", default=0.05)
 	parser.add_argument("--decimals", action="store_true")
 	args = parser.parse_args()
 	if args.decimals:
 		clean(sys.stdin, ".")
 	cont=True
+	expected = map(lambda x: int(args.n*x), Poker(args.k).probabilities())
+	expected = regroup(expected)
+	count = 0
+	success = 0
 	while cont:
 		l, cont = read(sys.stdin, args.k, args.n)
 		if cont:
-			print "\t".join(map(str, l))
-	print "expected:"
-	def f(x):
-		return str(int(args.n*x))
-	print "\t".join(map(f, Poker(args.k).probabilities()))
+			l = regroup(l)
+			chisq = chisquare(l, expected)
+			s = "%5.2f %5.2f" % (chisq.statistic, chisq.pvalue)
+			print l, expected, s
+			if chisq.pvalue >= 1-args.alpha:
+				success += 1
+			count += 1
+	print "rate:", float(success)/count
