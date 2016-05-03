@@ -73,7 +73,7 @@ if __name__ == "__main__":
 		chisq = chisquare(lengths, expected)
 		s = "%5.2f %5.2f" % (chisq.statistic, chisq.pvalue)
 		print lengths, "\t", s
-		if chisq.pvalue >= 1-args.alpha:
+		if chisq.pvalue >= args.alpha:
 			success += 1
 		count += 1
 	print "rate:", float(success)/count
