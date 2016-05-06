@@ -7,12 +7,12 @@ class Coupon(object):
 		"""
 		Process k digits in the given array.
 		"""
-		tab_length = [0 for _ in range(self.max_length-self.nbr_of_coupons)]
+		tab_length = [0 for _ in range(self.max_length-self.coupons)]
 		for _ in range(self.n):
-			flags = [False for _ in range(self.nbr_of_coupons)]
+			flags = [False for _ in range(self.coupons)]
 			count = 0 #different values = class
 			length = 0
-			while count != self.nbr_of_coupons and length < self.max_length:		
+			while count != self.coupons and length < self.max_length:
 				length += 1
 				n = stream.read(1)
 				while not n.isdigit():
@@ -21,24 +21,25 @@ class Coupon(object):
 				if not flags[n]:
 					flags[n] = True
 					count += 1
-			tab_length[length-self.nbr_of_coupons-1] += 1
+			tab_length[length-self.coupons-1] += 1
 		return tab_length
 
 	def probabilities(self):
 		l = []
-		fact = math.factorial(self.nbr_of_coupons)
-		for r in range(self.nbr_of_coupons, self.max_length+1):
+		fact = math.factorial(self.coupons)
+		for r in range(self.coupons, self.max_length+1):
+			p = stir(r-1, self.coupons-1) * float(fact) / pow(self.coupons,r)
 			if r == self.max_length:
-				l.append(1-(stir(r-1, self.nbr_of_coupons) * float(fact) / pow(self.nbr_of_coupons,r-1)))
+				l.append(1-p)
 			else:
-				l.append(stir(r-1, self.nbr_of_coupons-1) * float(fact) / pow(self.nbr_of_coupons,r))
+				l.append(p)
 		return l
 	def __init__(self,n,nbr_of_coupons,max_length):
 		"""
 		Create an object processing blocks of k digits.
 		"""
 		self.n = n
-		self.nbr_of_coupons = nbr_of_coupons
+		self.coupons = nbr_of_coupons
 		self.max_length = max_length
 
 def clean(stream, until):
