@@ -13,14 +13,15 @@ class Coupon(object):
 			count = 0 #different values = class
 			length = 0
 			while count != self.coupons and length < self.max_length:
-				length += 1
 				n = stream.read(1)
-				while not n.isdigit():
-					n = stream.read(1)
-				n = int(n)
-				if not flags[n]:
-					flags[n] = True
-					count += 1
+				if n.isdigit():
+					length += 1
+					n = int(n)
+					if not flags[n]:
+						flags[n] = True
+						count += 1
+				elif not len(n):
+					return
 			tab_length[length-self.coupons-1] += 1
 		return tab_length
 
