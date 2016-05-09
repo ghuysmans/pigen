@@ -91,7 +91,10 @@ if __name__ == "__main__":
 	parser.add_argument("s", type=int, help="nbr of coupons")
 	parser.add_argument("t", type=int, help="nbr of tests")
 	parser.add_argument("--decimals", action="store_true")
+	parser.add_argument("--alpha", type=float, help="alpha test value", default=0.05)
 	args = parser.parse_args()
+	count = 0
+	success = 0
 	if args.decimals:
 		clean(sys.stdin, ".")
 	coup = Coupon(args.n,args.s,args.m)
