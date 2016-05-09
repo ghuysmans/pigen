@@ -85,7 +85,7 @@ if __name__ == "__main__":
 	if args.decimals:
 		clean(sys.stdin, ".")
 	cont=True
-	expected = map(lambda x: int(args.n*x), Poker(args.k).probabilities())
+	expected = map(lambda x: args.n*x, Poker(args.k).probabilities())
 	expected = regroup(expected)
 	count = 0
 	success = 0

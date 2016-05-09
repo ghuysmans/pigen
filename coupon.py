@@ -97,7 +97,7 @@ if __name__ == "__main__":
 	if args.decimals:
 		clean(sys.stdin, ".")
 	coup = Coupon(args.n,args.s,args.m)
-	expected = map(lambda x: int(args.n*x), coup.probabilities())
+	expected = map(lambda x: args.n*x, coup.probabilities())
 	for _ in range(args.t):
 		l = coup.process(sys.stdin)
 		if l == None:
