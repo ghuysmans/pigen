@@ -101,6 +101,8 @@ if __name__ == "__main__":
 	expected = map(lambda x: int(args.n*x), coup.probabilities())
 	for _ in range(args.t):
 		l = coup.process(sys.stdin)
+		if l == None:
+			break
 		print l, expected
 		chisq = chisquare(l, expected)
 		s = "%5.2f %5.2f" % (chisq.statistic, chisq.pvalue)
