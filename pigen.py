@@ -19,6 +19,8 @@ while True:
 	a=1234567891
 	c=42
 	m=2**20
-	for _ in range(100):
-		seed = (a*seed + c) % m
+	mask=m*2-1
+	k=100
+	for _ in range(k):
+		seed = (a*seed + c) and mask
 		sys.stdout.write(str(int(float(seed)/m*10)))
