@@ -1,0 +1,115 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[margin=1.5cm]{geometry}
+\author{\textsc{Huysmans} Guillaume, \textsc{Lempereur} Martin}
+\title{Le rapport de la simulation simulée}
+\begin{document}
+\maketitle
+
+\section{Introduction}
+Le CPU d'un ordinateur est entièrement déterministe. Certains algorithmes
+utilisés par exemple en intelligence artificielle ne le sont pas et auront de
+bien meilleurs résultats lorsqu'il pourront explorer <<~au hasard~>> différentes
+zones de leur espace de recherche. Différentes méthodes existent afin de générer
+des nombres pseudo-aléatoires (ils ne le sont pas vraiment puisqu'ils sont
+implémentés avec des algorithmes parfaitement déterministes). La seule donnée
+peu prévisible que nous choisissons d'utiliser est le moment auquel le générateur
+est lancé.
+Les méthodes vues au cours afin de générer des nombres selon des lois normales,
+poissonniennes, exponentielles, etc. se basent sur un générateur uniforme et
+c'est ce que nous essaierons de construire ici. 
+
+\section{Tests}
+L'erreur de première espèce (risque de confirmer l'hypothèse de même loi à tort)
+est fixée à $\alpha=0.05$.
+
+\subsection{Histogramme}
+Un histogramme peut nous donner un premier aperçu sur la répartition
+du premier million de décimales du nombre $\pi$.
+Cependant un histogramme n'a aucune valeur scientifique \textit{per se}. 
+On peut facilement comprendre que la séquence [0,1,2,3,4,5,6,7,8,9]
+nous donnera un histogramme parfaitement régulier.
+Nous avons donc implémenté une batterie de tests qui se concentrent sur d'autres aspects de l'uniformité.
+
+%FIXME résultats
+
+\subsection{Test du Poker}
+Nous avons choisi de nous baser directement sur les décimales contenues
+dans le fichier. Ainsi, nous utiliserons 10 classes qui correspondront
+à chaque fois au nombre de <<~faces~>> différentes obtenues
+après $k$ lancers afin d'éviter de trop importantes erreurs d'arrondi.
+%FIXME pluriel arrondi ?
+Ce test est répété $n$ fois et un ratio de tests réussis est calculé.
+Des classes peu peuplées ont été regroupées afin d'éviter
+des valeurs attendues nulles.
+
+\texttt{./poker.py 10 1000 <pi6.txt} fonctionne à 91\%.
+
+\subsection{Test de Gap}
+%FIXME autres paramètres
+On décide d'un intervalle $[a,b] \subset [0,1]$,
+on génère une séquence de nombres (nous avons décidé de regrouper des décimales)
+et on marque ceux compris dans cet intervalle. Le but du test est de regarder les
+distances entre deux nombres marqués successifs.
+Afin d'éviter des classes aux valeurs attendues nulles
+qui auraient une influence énorme sur le test du $\chi^2$,
+les paramètres ont été soigneusement choisis.
+
+\texttt{./gap.py 11 10000 20 <pi6.txt} fonctionne à 85\%.
+
+\subsection{Test du collectionneur de coupons}
+On essaie de collectionner $s$ coupons (par défaut 10 -- un par chiffre)
+jusqu'à maximum $m$ tirages.
+On crée une classe par nombre de tirages nécessaires pour les collectionner tous.
+Il n'y en aura pas pour moins de $s$ lancers puisqu'on veut obtenir
+$s$ coupons différents.
+Une dernière classe regroupe les longueurs strictement supérieures à $m$.
+Le test est répété $t$ fois sur des séquences consécutives dans le fichier.
+
+\texttt{./coupon.py 1000 15 1000 <pi6.txt} fonctionne à 95\%.
+
+\section{Générateur}
+Puisque les décimales de $\pi$ semblent proches d'une séquence de chiffres
+pseudo-aléatoire, nous pouvons les utiliser afin d'obtenir un \textit{seed}
+pour un LCG\footnote{Linear Congruential Generator}. Ce dernier ne sera utilisé
+que $k=100$ fois avant d'utiliser la séquence suivante. Celle-ci est composée de
+$d=10$ chiffres qui forment ensemble un (grand) nombre entier.
+Le multiplicateur du générateur est un nombre premier de 10 chiffres testé
+à l'aide de l'outil \texttt{factor} issu des \textit{GNU coreutils}.
+L'incrément a été fixé à 42 de façon totalement arbitraire.
+Le module vaut $2^{20}$ ce qui permet de calculer rapidement par masquage
+le reste de la division.
+Les chiffres générés sont uniquement le premier dans les décimales de chaque
+valeur de départ divisée par $m$.
+Puisque le numérateur est par définition toujours strictement inférieur à $m$,
+c'est un rationnel dans $]0,1[$ qui est utilisé.
+
+La position de départ dans le fichier contenant le million de décimales
+est déterminée par la date en secondes. Lorsqu'on arrive au bout de ce fichier,
+on recommence au début.
+
+Les résultats des tests sur les chiffres générés avec les mêmes paramètres
+qu'à la section précédente se trouvent à la figure \ref{fig:genD}.
+
+\begin{figure}
+\center
+\begin{tabular}{l|c|c|c}
+Test & $\pi$ & Générés & Résultat \\ \hline \hline
+Histogramme & FIXME & FIXME & ?? \\ \hline
+Poker & 91\% & 98\% & > \\ \hline
+Gap & 85\% & 85\% & = \\ \hline
+Coupons & 95\% & 94\% & <
+\end{tabular}
+\caption{Comparaison des chiffres générés et des premières décimales de $\pi$}
+\label{fig:genD}
+\end{figure}
+
+ON VEUT DES CHIFFRES. PLEIN.
+
+\end{document}
