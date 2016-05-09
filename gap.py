@@ -56,6 +56,7 @@ if __name__ == "__main__":
 	success = 0
 	count = 0
 	print expected
+	gtfo = False
 	for _ in range(args.t):
 		lengths = [0 for _ in range(args.r+1)]
 		max_seq_length = 0
@@ -63,6 +64,7 @@ if __name__ == "__main__":
 			n = real(sys.stdin, args.digits)
 			if n == None:
 				print >>sys.stdout, "not enough input"
+				gtfo = True
 				break
 			if args.a<=n and n<=args.b:
 				lengths[max_seq_length] += 1
@@ -70,6 +72,8 @@ if __name__ == "__main__":
 			else:
 				max_seq_length = min(args.r, max_seq_length+1)
 			#print lengths, max_seq_length
+		if gtfo:
+			break
 		chisq = chisquare(lengths, expected)
 		s = "%5.2f %5.2f" % (chisq.statistic, chisq.pvalue)
 		print lengths, "\t", s
