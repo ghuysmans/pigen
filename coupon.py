@@ -7,7 +7,7 @@ class Coupon(object):
 		"""
 		Process k digits in the given array.
 		"""
-		tab_length = [0 for _ in range(self.max_length-self.coupons)]
+		tab_length = [0 for _ in range(self.max_length-self.coupons+1)]
 		for _ in range(self.n):
 			flags = [False for _ in range(self.coupons)]
 			count = 0 #different values = class
@@ -22,7 +22,7 @@ class Coupon(object):
 						count += 1
 				elif not len(n):
 					return
-			tab_length[length-self.coupons-1] += 1
+			tab_length[length-self.coupons] += 1
 		return tab_length
 
 	def probabilities(self):
