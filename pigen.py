@@ -21,5 +21,4 @@ while True:
 	m=2**20
 	for _ in range(100):
 		seed = (a*seed + c) % m
-		#print float(seed)/m
-		sys.stdout.write(str(int(seed*10)))
+		sys.stdout.write(str(int(float(seed)/m*10)))
