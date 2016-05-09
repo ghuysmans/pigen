@@ -4,9 +4,6 @@ import math
 
 class Coupon(object):
 	def process(self, stream):
-		"""
-		Process k digits in the given array.
-		"""
 		tab_length = [0 for _ in range(self.max_length-self.coupons+1)]
 		for _ in range(self.n):
 			flags = [False for _ in range(self.coupons)]
@@ -85,9 +82,10 @@ if __name__ == "__main__":
 	import sys
 	import argparse
 	parser = argparse.ArgumentParser()
+	#FIXME better descriptions
 	parser.add_argument("n", type=int, help="coupons size: ?")
 	parser.add_argument("m", type=int, help="max length: 10?")
-	parser.add_argument("s", type=int, help="nbr of coupons")
+	parser.add_argument("--s", type=int, help="nbr of coupons", default=10)
 	parser.add_argument("t", type=int, help="nbr of tests")
 	parser.add_argument("--decimals", action="store_true")
 	parser.add_argument("--alpha", type=float, help="alpha test value", default=0.05)
