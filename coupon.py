@@ -29,11 +29,10 @@ class Coupon(object):
 		l = []
 		fact = math.factorial(self.coupons)
 		for r in range(self.coupons, self.max_length+1):
-			p = stir(r-1, self.coupons-1) * float(fact) / pow(self.coupons,r)
 			if r == self.max_length:
-				l.append(1-p)
+				l.append(1-(stir(r-1, self.coupons) * float(fact) / pow(self.coupons,r-1)))
 			else:
-				l.append(p)
+				l.append(stir(r-1, self.coupons-1) * float(fact) / pow(self.coupons,r))
 		return l
 	def __init__(self,n,nbr_of_coupons,max_length):
 		"""
