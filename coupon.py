@@ -2,6 +2,10 @@
 from scipy.stats import chisquare
 import math
 
+def formatTex(tab):
+	list = " & ".join(str(x) for x in tab)
+	list += "\\\\ \\hline"
+	return list
 class Coupon(object):
 	def process(self, stream):
 		tab_length = [0 for _ in range(self.max_length-self.coupons+1)]
@@ -96,13 +100,16 @@ if __name__ == "__main__":
 		clean(sys.stdin, ".")
 	coup = Coupon(args.n,args.s,args.m)
 	expected = map(lambda x: args.n*x, coup.probabilities())
+	print formatTex(expected)
 	for _ in range(args.t):
 		l = coup.process(sys.stdin)
 		if l == None:
 			break
-		print l, expected
 		chisq = chisquare(l, expected)
 		s = "%5.2f %5.2f" % (chisq.statistic, chisq.pvalue)
+		l.append("%5.2f" % chisq.statistic)
+		l.append("%5.2f" % chisq.pvalue)
+		print formatTex(l)
 		#print l, expected, s
 		if chisq.pvalue >= args.alpha:
 			success += 1
