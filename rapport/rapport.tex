@@ -51,6 +51,114 @@ des valeurs attendues nulles.
 
 \texttt{./poker.py 10 1000 <pi6.txt} fonctionne à 91\%.
 
+On va comparer les résultats de nos tests aux valeurs théoriques suivantes :
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+1 face $\neq$ & 2 faces $\neq$  & 3 faces $\neq$ & 4 faces $\neq$ & 5 faces $\neq$\\
+\hline \hline
+34.55776 & 128.5956 & 345.14424 & 355.6224 & 136.08\\ \hline
+\end{tabular}
+\end{center}
+La commande ci-dessus produits les résultats suivants (résultats non-exhaustifs) : 
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|c|c|}
+\hline
+1 face $\neq$ & 2 faces $\neq$  & 3 faces $\neq$ & 4 faces $\neq$ & 5 faces $\neq$ & Résultats $\chi^2$ & Probabilités \\
+\hline \hline
+36 & 137 & 345 & 343 & 139 &  1.12 &  0.89\\ \hline
+38 & 151 & 334 & 353 & 124 &  5.70 &  0.22\\ \hline
+38 & 125 & 358 & 373 & 106 &  8.42 &  0.08\\ \hline
+38 & 139 & 340 & 357 & 126 &  2.01 &  0.73\\ \hline
+31 & 132 & 358 & 347 & 132 &  1.27 &  0.87\\ \hline
+30 & 101 & 382 & 333 & 154 & 14.26 &  0.01\\ \hline
+24 & 137 & 334 & 367 & 138 &  4.53 &  0.34\\ \hline
+30 & 127 & 340 & 360 & 143 &  1.10 &  0.89\\ \hline
+35 & 115 & 338 & 369 & 143 &  2.45 &  0.65\\ \hline
+38 & 116 & 358 & 360 & 128 &  2.59 &  0.63\\ \hline
+37 & 123 & 347 & 370 & 123 &  2.26 &  0.69\\ \hline
+42 & 121 & 334 & 376 & 127 &  4.18 &  0.38\\ \hline
+40 & 134 & 328 & 351 & 147 &  2.87 &  0.58\\ \hline
+38 & 141 & 355 & 329 & 137 &  3.82 &  0.43\\ \hline
+42 & 129 & 341 & 339 & 149 &  3.66 &  0.45\\ \hline
+54 & 135 & 349 & 325 & 137 & 13.94 &  0.01\\ \hline
+ . & . & . & . & . & . & . \\ \hline
+ . & . & . & . & . & . & . \\ \hline
+ . & . & . & . & . & . & . \\ \hline
+34 & 142 & 338 & 355 & 131 &  1.74 &  0.78\\ \hline
+37 & 142 & 317 & 354 & 150 &  5.30 &  0.26\\ \hline
+28 & 119 & 358 & 366 & 129 &  3.11 &  0.54\\ \hline
+36 & 125 & 314 & 372 & 153 &  5.83 &  0.21\\ \hline
+27 & 131 & 344 & 362 & 136 &  1.82 &  0.77\\ \hline
+35 & 155 & 323 & 351 & 136 &  6.91 &  0.14\\ \hline
+ . & . & . & . & . & . & . \\ \hline
+ . & . & . & . & . & . & . \\ \hline
+ . & . & . & . & . & . & . \\ \hline
+38 & 119 & 350 & 355 & 138 &  1.16 &  0.89\\ \hline
+32 & 139 & 344 & 352 & 133 &  1.14 &  0.89\\ \hline
+\end{tabular}
+\end{center}
+
+Pour donner un point de comparaison avec le générateur de base python nous avons exécuté ce même test sur des nombres générés à partir du module random.
+
+Les résultats théoriques attendus sont donc les mêmes car les paramètres ne changent pas
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|c|c|}
+\hline
+1 face $\neq$ & 2 faces $\neq$  & 3 faces $\neq$ & 4 faces $\neq$ & 5 faces $\neq$ & Résultats $\chi^2$ & Probabilités \\
+\hline \hline
+40 & 128 & 360 & 321 & 151 &  6.51 &  0.16\\ \hline
+27 & 128 & 371 & 354 & 120 &  5.50 &  0.24\\ \hline
+31 & 137 & 325 & 371 & 136 &  2.76 &  0.60\\ \hline
+37 & 118 & 363 & 350 & 132 &  2.18 &  0.70\\ \hline
+40 & 116 & 372 & 339 & 133 &  5.03 &  0.28\\ \hline
+29 & 122 & 355 & 376 & 118 &  5.08 &  0.28\\ \hline
+ . & . & . & . & . & . & . \\ \hline
+ . & . & . & . & . & . & . \\ \hline
+ . & . & . & . & . & . & . \\ \hline
+33 & 128 & 349 & 357 & 133 &  0.19 &  1.00\\ \hline
+32 & 129 & 329 & 368 & 142 &  1.63 &  0.80\\ \hline
+36 & 117 & 335 & 380 & 132 &  3.20 &  0.53\\ \hline
+33 & 124 & 353 & 368 & 122 &  2.30 &  0.68\\ \hline
+35 & 111 & 349 & 376 & 129 &  3.99 &  0.41\\ \hline
+38 & 114 & 345 & 360 & 143 &  2.41 &  0.66\\ \hline
+30 & 140 & 350 & 348 & 132 &  1.97 &  0.74\\ \hline
+33 & 137 & 337 & 341 & 152 &  3.28 &  0.51\\ \hline
+33 & 151 & 342 & 343 & 131 &  4.64 &  0.33\\ \hline
+26 & 136 & 367 & 344 & 127 &  4.92 &  0.30\\ \hline
+35 & 130 & 339 & 338 & 158 &  4.53 &  0.34\\ \hline
+39 & 107 & 367 & 338 & 149 &  7.68 &  0.10\\ \hline
+35 & 115 & 344 & 353 & 153 &  3.57 &  0.47\\ \hline
+44 & 124 & 371 & 352 & 109 & 10.11 &  0.04\\ \hline
+39 & 128 & 358 & 344 & 131 &  1.62 &  0.80\\ \hline
+ . & . & . & . & . & . & . \\ \hline
+ . & . & . & . & . & . & . \\ \hline
+ . & . & . & . & . & . & . \\ \hline
+30 & 119 & 303 & 406 & 142 & 13.86 &  0.01\\ \hline
+32 & 140 & 354 & 325 & 149 &  5.29 &  0.26\\ \hline
+41 & 130 & 357 & 347 & 125 &  2.73 &  0.60\\ \hline
+42 & 131 & 337 & 358 & 132 &  1.98 &  0.74\\ \hline
+31 & 124 & 347 & 367 & 131 &  1.09 &  0.90\\ \hline
+39 & 128 & 347 & 336 & 150 &  3.09 &  0.54\\ \hline
+31 & 106 & 364 & 363 & 136 &  5.52 &  0.24\\ \hline
+30 & 142 & 344 & 352 & 132 &  2.16 &  0.71\\ \hline
+41 & 137 & 330 & 378 & 114 &  7.41 &  0.12\\ \hline
+31 & 137 & 331 & 351 & 150 &  2.98 &  0.56\\ \hline
+37 & 124 & 349 & 367 & 123 &  2.00 &  0.74\\ \hline
+31 & 120 & 353 & 353 & 143 &  1.49 &  0.83\\ \hline
+30 & 116 & 339 & 361 & 154 &  4.39 &  0.36\\ \hline
+39 & 140 & 328 & 351 & 142 &  2.75 &  0.60\\ \hline
+32 & 139 & 345 & 358 & 126 &  1.79 &  0.77\\ \hline
+47 & 155 & 314 & 347 & 137 & 12.93 &  0.01\\ \hline
+37 & 115 & 343 & 367 & 138 &  2.01 &  0.73\\ \hline
+30 & 131 & 364 & 334 & 141 &  3.17 &  0.53\\ \hline
+31 & 134 & 333 & 359 & 143 &  1.40 &  0.84\\ \hline
+\end{tabular}
+\end{center}
+
+Cette fois-ci les tests réussissent avec un taux de $95\%$
+
+
 \subsection{Test de Gap}
 %FIXME autres paramètres
 On décide d'un intervalle $[a,b] \subset [0,1]$,
