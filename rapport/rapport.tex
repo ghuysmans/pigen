@@ -218,6 +218,60 @@ Coupons & 95\% & 94\% & <
 \label{fig:genD}
 \end{figure}
 
-ON VEUT DES CHIFFRES. PLEIN.
+\subsection{Tests}
+Nous allons réitérer les mêmes tests que nous avons réaliser sur les décimales de $\pi$ et sur des chiffres générés pas la fonction random de python mais cette fois-ci sur des nombres générés a l'aide de notre générateur.
+Pour reproduire ces tests, il suffit de reprendre les commandes qui on été utilisées dans les sections précédentes.
+
+\subsubsection{Poker}
+\textbf{Rappel :} Les paramètres restants inchangés on compare les résultats générés aux valeurs théoriques citées précédemment.
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|c|c|}
+\hline
+1 face $\neq$ & 2 faces $\neq$  & 3 faces $\neq$ & 4 faces $\neq$ & 5 faces $\neq$ & Résultats $\chi^2$ & Probabilités \\
+\hline \hline
+41 & 128 & 329 & 354 & 148 &  3.01 &  0.56\\ \hline
+37 & 135 & 332 & 355 & 141 &  1.17 &  0.88\\ \hline
+25 & 135 & 327 & 363 & 150 &  5.49 &  0.24\\ \hline
+27 & 128 & 356 & 361 & 128 &  2.56 &  0.63\\ \hline
+41 & 126 & 341 & 343 & 149 &  2.98 &  0.56\\ \hline
+25 & 130 & 363 & 350 & 132 &  3.79 &  0.43\\ \hline
+30 & 138 & 345 & 352 & 135 &  1.33 &  0.86\\ \hline
+33 & 143 & 344 & 349 & 131 &  2.00 &  0.74\\ \hline
+35 & 143 & 359 & 324 & 139 &  5.05 &  0.28\\ \hline
+32 & 130 & 359 & 357 & 122 &  2.22 &  0.69\\ \hline
+36 & 129 & 335 & 360 & 140 &  0.53 &  0.97\\ \hline
+42 & 138 & 352 & 363 & 105 &  9.68 &  0.05\\ \hline
+34 & 124 & 346 & 348 & 148 &  1.38 &  0.85\\ \hline
+26 & 135 & 326 & 373 & 140 &  4.46 &  0.35\\ \hline
+40 & 117 & 335 & 359 & 149 &  3.46 &  0.48\\ \hline
+39 & 122 & 366 & 366 & 107 &  8.69 &  0.07\\ \hline
+26 & 155 & 353 & 332 & 134 &  9.32 &  0.05\\ \hline
+32 & 115 & 345 & 370 & 138 &  2.24 &  0.69\\ \hline
+33 & 124 & 324 & 365 & 154 &  4.14 &  0.39\\ \hline
+ . & . & . & . & . & . & . \\ \hline
+ . & . & . & . & . & . & . \\ \hline
+ . & . & . & . & . & . & . \\ \hline
+32 & 118 & 344 & 385 & 121 &  5.16 &  0.27\\ \hline
+40 & 129 & 338 & 366 & 127 &  1.91 &  0.75\\ \hline
+36 & 126 & 322 & 364 & 152 &  3.72 &  0.44\\ \hline
+38 & 128 & 331 & 366 & 137 &  1.23 &  0.87\\ \hline
+24 & 124 & 343 & 379 & 130 &  5.21 &  0.27\\ \hline
+30 & 140 & 353 & 337 & 140 &  2.88 &  0.58\\ \hline
+35 & 133 & 306 & 395 & 131 &  9.15 &  0.06\\ \hline
+24 & 139 & 343 & 353 & 141 &  4.28 &  0.37\\ \hline
+ . & . & . & . & . & . & . \\ \hline
+ . & . & . & . & . & . & . \\ \hline
+ . & . & . & . & . & . & . \\ \hline
+32 & 114 & 346 & 369 & 139 &  2.41 &  0.66\\ \hline
+26 & 125 & 345 & 378 & 126 &  4.37 &  0.36\\ \hline
+31 & 117 & 356 & 363 & 133 &  1.98 &  0.74\\ \hline
+36 & 132 & 339 & 368 & 125 &  1.59 &  0.81\\ \hline
+41 & 134 & 339 & 364 & 122 &  3.19 &  0.53\\ \hline
+37 & 124 & 331 & 369 & 139 &  1.48 &  0.83\\ \hline
+32 & 137 & 344 & 362 & 125 &  1.76 &  0.78\\ \hline
+\end{tabular}
+\end{center}
+Nous avons $98\%$ de réussites pour le test du Poker.
 
 \end{document}
