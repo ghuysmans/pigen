@@ -7,15 +7,15 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage[margin=1.5cm]{geometry}
-\author{\textsc{Huysmans} Guillaume, \textsc{Lempereur} Martin}
-\title{Le rapport de la simulation simulée}
+\author{Guillaume \textsc{Huysmans}, Martin \textsc{Lempereur}}
+\title{Le rapport de la simulation}
 \begin{document}
 \maketitle
 
 \section{Introduction}
 Le CPU d'un ordinateur est entièrement déterministe. Certains algorithmes
 utilisés par exemple en intelligence artificielle ne le sont pas et auront de
-bien meilleurs résultats lorsqu'il pourront explorer <<~au hasard~>> différentes
+bien meilleurs résultats lorsqu'ils pourront explorer <<~au hasard~>> différentes
 zones de leur espace de recherche. Différentes méthodes existent afin de générer
 des nombres pseudo-aléatoires (ils ne le sont pas vraiment puisqu'ils sont
 implémentés avec des algorithmes parfaitement déterministes). La seule donnée
@@ -26,7 +26,7 @@ poissonniennes, exponentielles, etc. se basent sur un générateur uniforme et
 c'est ce que nous essaierons de construire ici. 
 
 \section{Tests}
-L'erreur de première espèce (risque de confirmer l'hypothèse de même loi à tort)
+L'erreur de première espèce (risque de confirmer à tort l'hypothèse de même loi)
 est fixée à $\alpha=0.05$.
 
 \subsection{Histogramme}
@@ -41,7 +41,7 @@ Nous avons donc implémenté une batterie de tests qui se concentrent sur d'autr
 
 \subsection{Test du Poker}
 Nous avons choisi de nous baser directement sur les décimales contenues
-dans le fichier. Ainsi, nous utiliserons 10 classes qui correspondront
+dans le fichier. Ainsi, nous utiliserons 10~classes qui correspondront
 à chaque fois au nombre de <<~faces~>> différentes obtenues
 après $k$ lancers afin d'éviter de trop importantes erreurs d'arrondi.
 %FIXME pluriel arrondi ?
@@ -110,6 +110,7 @@ Coupons & 95\% & 94\% & <
 \label{fig:genD}
 \end{figure}
 
+%TODO
 ON VEUT DES CHIFFRES. PLEIN.
 
 \end{document}
