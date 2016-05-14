@@ -1,6 +1,10 @@
 #!/usr/bin/env python2
 from scipy.stats import chisquare
 
+def formatTex(tab):
+	list = " & ".join(str(x) for x in tab)
+	list += "\\\\ \\hline"
+	return list
 class Poker(object):
 	def process(self, digits):
 		"""
@@ -89,13 +93,16 @@ if __name__ == "__main__":
 	expected = regroup(expected)
 	count = 0
 	success = 0
+	print formatTex(expected)
 	while cont:
 		l, cont = read(sys.stdin, args.k, args.n)
 		if cont:
 			l = regroup(l)
 			chisq = chisquare(l, expected)
 			s = "%5.2f %5.2f" % (chisq.statistic, chisq.pvalue)
-			print l, expected, s
+			l.append("%5.2f" % chisq.statistic)
+			l.append("%5.2f" % chisq.pvalue)
+			print formatTex(l)
 			if chisq.pvalue >= args.alpha:
 				success += 1
 			count += 1

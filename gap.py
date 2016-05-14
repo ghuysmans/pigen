@@ -1,6 +1,10 @@
 #!/usr/bin/env python2
 from scipy.stats import chisquare
 
+def formatTex(tab):
+	list = " & ".join(str(x) for x in tab)
+	list += "\\\\ \\hline"
+	return list
 def clean(stream, until):
 	"""
 	Discard bytes from the given stream until a character is found.
@@ -55,7 +59,7 @@ if __name__ == "__main__":
 	expected = expected(args.a, args.b, args.r, args.s)
 	success = 0
 	count = 0
-	print expected
+	print formatTex(expected)
 	gtfo = False
 	for _ in range(args.t):
 		lengths = [0 for _ in range(args.r+1)]
@@ -76,7 +80,9 @@ if __name__ == "__main__":
 			break
 		chisq = chisquare(lengths, expected)
 		s = "%5.2f %5.2f" % (chisq.statistic, chisq.pvalue)
-		print lengths, "\t", s
+		lengths.append("%5.2f" % chisq.statistic)
+		lengths.append("%5.2f" % chisq.pvalue)
+		print formatTex(lengths)
 		if chisq.pvalue >= args.alpha:
 			success += 1
 		count += 1
