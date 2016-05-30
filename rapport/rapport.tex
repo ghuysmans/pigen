@@ -27,7 +27,7 @@ c'est ce que nous essaierons de construire ici.
 
 \section{Tests}
 L'erreur de première espèce (risque de confirmer à tort l'hypothèse de même loi)
-est fixée à $\alpha=0.05$.
+est fixée à $\alpha=0.05$, soit 5\%.
 
 \subsection{Histogramme}
 Un histogramme peut nous donner un premier aperçu sur la répartition
@@ -36,8 +36,6 @@ Cependant un histogramme n'a aucune valeur scientifique \textit{per se}.
 On peut facilement comprendre que la séquence [0,1,2,3,4,5,6,7,8,9]
 nous donnera un histogramme parfaitement régulier.
 Nous avons donc implémenté une batterie de tests qui se concentrent sur d'autres aspects de l'uniformité.
-
-%FIXME résultats
 
 \subsection{Test du Poker}
 Nous avons choisi de nous baser directement sur les décimales contenues
@@ -49,8 +47,6 @@ Ce test est répété $n$ fois et un ratio de tests réussis est calculé.
 Des classes peu peuplées ont été regroupées afin d'éviter
 des valeurs attendues nulles.
 
-\texttt{./poker.py 10 1000 <pi6.txt} fonctionne à 91\%.
-
 On va comparer les résultats de nos tests aux valeurs théoriques suivantes :
 \begin{center}
 \begin{tabular}{|l|l|l|l|l|}
@@ -60,11 +56,18 @@ On va comparer les résultats de nos tests aux valeurs théoriques suivantes :
 34.55776 & 128.5956 & 345.14424 & 355.6224 & 136.08\\ \hline
 \end{tabular}
 \end{center}
-La commande ci-dessus produit les résultats suivants (résultats non exhaustifs) : 
+
+Les résultats théoriques attendus seront toujours les mêmes car les paramètres ne
+changent pas.
+
+\newpage
+\texttt{./poker.py 10 1000 <pi6.txt} fonctionne à 91\%.
+
+La commande ci-dessus produit les résultats suivants (résultats non exhaustifs) :
 \begin{center}
 \begin{tabular}{|l|l|l|l|l|c|c|}
 \hline
-1 face $\neq$ & 2 faces $\neq$  & 3 faces $\neq$ & 4 faces $\neq$ & 5 faces $\neq$ & Résultats $\chi^2$ & Probabilités \\
+1 face $\neq$ & 2 faces $\neq$  & 3 faces $\neq$ & 4 faces $\neq$ & 5 faces $\neq$ & $\chi^2$ & Probabilité \\
 \hline \hline
 36 & 137 & 345 & 343 & 139 &  1.12 &  0.89\\ \hline
 38 & 151 & 334 & 353 & 124 &  5.70 &  0.22\\ \hline
@@ -99,14 +102,14 @@ La commande ci-dessus produit les résultats suivants (résultats non exhaustifs
 \end{tabular}
 \end{center}
 
-Pour donner un point de comparaison avec le générateur de base python nous avons exécuté ce même test sur des nombres générés à partir du module random.
+\newpage
+Pour donner un point de comparaison avec le générateur inclus à Python nous avons
+exécuté ce même test sur des nombres générés à partir du module \texttt{random}.
 
-Les résultats théoriques attendus sont donc les mêmes car les paramètres ne
-changent pas.
 \begin{center}
 \begin{tabular}{|l|l|l|l|l|c|c|}
 \hline
-1 face $\neq$ & 2 faces $\neq$  & 3 faces $\neq$ & 4 faces $\neq$ & 5 faces $\neq$ & Résultats $\chi^2$ & Probabilités \\
+1 face $\neq$ & 2 faces $\neq$  & 3 faces $\neq$ & 4 faces $\neq$ & 5 faces $\neq$ & $\chi^2$ & Probabilité \\
 \hline \hline
 40 & 128 & 360 & 321 & 151 &  6.51 &  0.16\\ \hline
 27 & 128 & 371 & 354 & 120 &  5.50 &  0.24\\ \hline
@@ -170,20 +173,21 @@ Afin d'éviter des classes aux valeurs attendues nulles
 qui auraient une influence énorme sur le test du $\chi^2$,
 les paramètres ont été soigneusement choisis.
 
-\texttt{./gap.py 11 10000 20 <pi6.txt} fonctionne à 85\%.
-
 Soit $r$ la longueur d'un gap, les valeurs attendues en fonction de $r$ sont les suivantes : 
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
-$r = 0$ & $r = 1$ & $r = 2$ & $r = 3$ & $r = 4$ & $r = 5$ & $r = 6$ & $r = 7$ & $r = 8$ & $r = 9$ & $r = 10$ & $r \geq 11$\\ \hline
-2500.0 & 1250.0 & 625.0 & 312.5 & 156.25 & 78.125 & 39.0625 & 19.53125 & 9.765625 & 4.8828125 & 2.44140625 & 1.220703125\\ \hline
+$0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $10$ & $\geq 11$\\ \hline
+2500.0 & 1250.0 & 625.0 & 312.5 & 156.25 & 78.13 & 39.06 & 19.53 & 9.77 & 4.88 & 2.44 & 1.22\\ \hline
 \end{tabular}
 \end{center}
+
+\texttt{./gap.py 11 10000 20 <pi6.txt} fonctionne à 85\% :
+
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
-$r = 0$ & $r = 1$ & $r = 2$ & $r = 3$ & $r = 4$ & $r = 5$ & $r = 6$ & $r = 7$ & $r = 8$ & $r = 9$ & $r = 10$ & $r \geq 11$ & Résultats $\chi^2$ & Probabilités \\ \hline
+$0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $10$ & $\geq 11$ & $\chi^2$ & Probabilité \\ \hline
 2512 & 1211 & 618 & 315 & 159 & 97 & 34 & 18 & 12 & 5 & 1 & 2 &  8.62 &  0.66\\ \hline
 2519 & 1265 & 654 & 305 & 160 & 85 & 27 & 16 & 9 & 5 & 1 & 0 &  9.04 &  0.62\\ \hline
 2505 & 1230 & 648 & 316 & 154 & 66 & 42 & 15 & 14 & 6 & 2 & 3 &  9.17 &  0.61\\ \hline
@@ -207,12 +211,13 @@ $r = 0$ & $r = 1$ & $r = 2$ & $r = 3$ & $r = 4$ & $r = 5$ & $r = 6$ & $r = 7$ & 
 \end{tabular}
 \end{center}
 
-Quant aux résultats des tests sur les chiffres générés par le random de python,
+\newpage
+Avec des chiffres générés avec le module \texttt{random} de Python,
 on obtient $95\%$ de réussite.
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
-$r = 0$ & $r = 1$ & $r = 2$ & $r = 3$ & $r = 4$ & $r = 5$ & $r = 6$ & $r = 7$ & $r = 8$ & $r = 9$ & $r = 10$ & $r \geq 11$ & Résultats $\chi^2$ & Probabilités \\ \hline
+$0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $10$ & $\geq 11$ & $\chi^2$ & Probabilité \\ \hline
 2582 & 1236 & 618 & 322 & 121 & 89 & 39 & 18 & 11 & 8 & 4 & 2 & 16.44 &  0.13\\ \hline
 2482 & 1269 & 655 & 305 & 164 & 86 & 25 & 12 & 5 & 7 & 3 & 3 & 17.15 &  0.10\\ \hline
 2455 & 1276 & 622 & 298 & 158 & 84 & 40 & 17 & 10 & 6 & 4 & 2 &  4.60 &  0.95\\ \hline
@@ -246,8 +251,6 @@ $s$ coupons différents.
 Une dernière classe regroupe les longueurs strictement supérieures à $m$.
 Le test est répété $t$ fois sur des séquences consécutives dans le fichier.
 
-\texttt{./coupon.py 1000 15 1000 <pi6.txt} fonctionne à 95\%.
-
 Soit $l$ le nombre de lancers, les résultats théoriques attendu sont les suivants :
 
 \begin{center}
@@ -259,12 +262,15 @@ $l = 10$ & $l = 11$ & $l = 12$ & $l = 13$ & $l = 14$ & $l \geq 15$ \\ \hline
 \end{tabular}
 \end{center}
 
-On compare les résultat théoriques ci-dessus aux résultats des tests suivants : 
+\newpage
+\texttt{./coupon.py 1000 15 1000 <pi6.txt} fonctionne à 95\%.
+
+On compare les résultat théoriques ci-dessus aux résultats des tests suivants :
 
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline
-$l = 10$ & $l = 11$ & $l = 12$ & $l = 13$ & $l = 14$ & $l \geq 15$ & Résultats $\chi^2$ & Probabilités \\ \hline
+$l = 10$ & $l = 11$ & $l = 12$ & $l = 13$ & $l = 14$ & $l \geq 15$ & $\chi^2$ & Probabilité \\ \hline
 2 & 2 & 6 & 10 & 12 & 968 &  8.81 &  0.12\\ \hline
 0 & 3 & 4 & 8 & 14 & 971 &  1.59 &  0.90\\ \hline
 0 & 1 & 4 & 6 & 8 & 981 &  3.18 &  0.67\\ \hline
@@ -294,14 +300,15 @@ $l = 10$ & $l = 11$ & $l = 12$ & $l = 13$ & $l = 14$ & $l \geq 15$ & Résultats 
 \end{tabular}
 \end{center}
 
-Les mêmes tests réalisés sur les nombres générés par le random de python
-nous donnent les résultats suivant :
+\newpage
+Les mêmes tests réalisés sur les nombres générés par \texttt{random}
+nous donnent ceci :
 
 
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline
-$l = 10$ & $l = 11$ & $l = 12$ & $l = 13$ & $l = 14$ & $l \geq 15$ & Résultats $\chi^2$ & Probabilités \\ \hline
+$l = 10$ & $l = 11$ & $l = 12$ & $l = 13$ & $l = 14$ & $l \geq 15$ & $\chi^2$ & Probabilité \\ \hline
 0 & 1 & 4 & 6 & 11 & 978 &  1.50 &  0.91\\ \hline
 0 & 3 & 1 & 7 & 14 & 975 &  4.16 &  0.53\\ \hline
 1 & 1 & 3 & 6 & 13 & 976 &  2.25 &  0.81\\ \hline
@@ -374,6 +381,7 @@ Coupons & 95\% & 94\% & <
 \end{figure}
 
 \subsection{Tests}
+%FIXME
 Nous allons réitérer les mêmes tests que nous avons réalisés sur les décimales de $\pi$ et sur des chiffres générés pas la fonction random de python mais cette fois-ci sur des nombres générés à l'aide de notre générateur.
 Pour reproduire ces tests, il suffit de reprendre les commandes qui ont été utilisées dans les sections précédentes.
 
@@ -383,7 +391,7 @@ Pour reproduire ces tests, il suffit de reprendre les commandes qui ont été ut
 \begin{center}
 \begin{tabular}{|l|l|l|l|l|c|c|}
 \hline
-1 face $\neq$ & 2 faces $\neq$  & 3 faces $\neq$ & 4 faces $\neq$ & 5 faces $\neq$ & Résultats $\chi^2$ & Probabilités \\
+1 face $\neq$ & 2 faces $\neq$  & 3 faces $\neq$ & 4 faces $\neq$ & 5 faces $\neq$ & $\chi^2$ & Probabilité \\
 \hline \hline
 41 & 128 & 329 & 354 & 148 &  3.01 &  0.56\\ \hline
 37 & 135 & 332 & 355 & 141 &  1.17 &  0.88\\ \hline
@@ -429,6 +437,7 @@ Pour reproduire ces tests, il suffit de reprendre les commandes qui ont été ut
 \end{center}
 Nous avons $98\%$ de réussite pour le test du Poker.
 
+\newpage
 \subsubsection{Gap}
 
 Les résultats obtenus en réalisant plusieurs tests de Gap sur des nombres issus
@@ -437,7 +446,7 @@ de notre générateur sont les suivants :
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
-$r = 0$ & $r = 1$ & $r = 2$ & $r = 3$ & $r = 4$ & $r = 5$ & $r = 6$ & $r = 7$ & $r = 8$ & $r = 9$ & $r = 10$ & $r > 11$ & Résultats $\chi^2$ & Probabilités \\ \hline
+$0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $10$ & $\geq 11$ & $\chi^2$ & Probabilité \\ \hline
 2398 & 1186 & 692 & 324 & 164 & 80 & 39 & 16 & 10 & 1 & 3 & 2 & 19.83 &  0.05\\ \hline
 2435 & 1215 & 631 & 331 & 148 & 86 & 35 & 25 & 7 & 8 & 3 & 3 & 12.50 &  0.33\\ \hline
 2433 & 1297 & 608 & 342 & 140 & 84 & 39 & 22 & 6 & 5 & 1 & 1 & 11.60 &  0.39\\ \hline
@@ -463,17 +472,18 @@ $r = 0$ & $r = 1$ & $r = 2$ & $r = 3$ & $r = 4$ & $r = 5$ & $r = 6$ & $r = 7$ & 
 
 On a ici un taux de réussite de $85\%$.
 
-\subsection*{Coupons}
+\newpage
+\subsection{Coupons}
 
 Nous terminons par la réalisation plusieurs autres tests de coupons mais
-cette fois-ci sur les nombres obtenus avec notre générateur.
+cette fois sur les nombres obtenus avec notre générateur.
 
 On obtient un taux de réussite de $94\%$ sur les résultats suivants :
 
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline
-$l = 10$ & $l = 11$ & $l = 12$ & $l = 13$ & $l = 14$ & $l \geq 15$ & Résultats $\chi^2$ & Probabilités \\ \hline
+$l = 10$ & $l = 11$ & $l = 12$ & $l = 13$ & $l = 14$ & $l \geq 15$ & $\chi^2$ & Probabilité \\ \hline
 1 & 1 & 7 & 8 & 14 & 969 &  3.33 &  0.65\\ \hline
 1 & 4 & 4 & 5 & 8 & 978 &  7.71 &  0.17\\ \hline
 0 & 0 & 2 & 11 & 22 & 965 & 10.40 &  0.06\\ \hline
@@ -510,5 +520,10 @@ $l = 10$ & $l = 11$ & $l = 12$ & $l = 13$ & $l = 14$ & $l \geq 15$ & Résultats 
 0 & 4 & 4 & 6 & 4 & 982 & 10.70 &  0.06\\ \hline
 \end{tabular}
 \end{center}
+
+
+\section{Conclusion}
+Les résultats sont tout à fait corrects et notre générateur semble faire
+au moins aussi bien que celui de Python.
 
 \end{document}
