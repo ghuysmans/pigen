@@ -34,7 +34,8 @@ Un histogramme peut nous donner un premier aperçu sur la répartition
 du premier million de décimales du nombre $\pi$.
 Cependant un histogramme n'a aucune valeur scientifique \textit{per se}. 
 On peut facilement comprendre que la séquence [0,1,2,3,4,5,6,7,8,9]
-nous donnera un histogramme parfaitement régulier.
+nous donnera un histogramme parfaitement régulier alors qu'elle est déjà loin
+de la définition intuitive que l'on peut avoir du hasard.
 Nous avons donc implémenté une batterie de tests qui se concentrent sur d'autres aspects de l'uniformité.
 
 \subsection{Test du Poker}
@@ -103,7 +104,8 @@ La commande ci-dessus produit les résultats suivants (résultats non exhaustifs
 \end{center}
 
 \newpage
-Pour donner un point de comparaison avec le générateur inclus à Python nous avons
+Pour donner un point de comparaison avec le générateur inclus à Python,
+nous avons
 exécuté ce même test sur des nombres générés à partir du module \texttt{random}.
 
 \begin{center}
@@ -163,15 +165,15 @@ exécuté ce même test sur des nombres générés à partir du module \texttt{r
 Cette fois-ci les tests réussissent avec un taux de $95\%$.
 
 
-\subsection{Test de Gap}
+\subsection{Test du Gap}
 %FIXME autres paramètres
 On décide d'un intervalle $[a,b] \subset [0,1]$,
 on génère une séquence de nombres (nous avons décidé de regrouper des décimales)
 et on marque ceux compris dans cet intervalle. Le but du test est de regarder les
 distances entre deux nombres marqués successifs.
-Afin d'éviter des classes aux valeurs attendues nulles
-qui auraient une influence énorme sur le test du $\chi^2$,
-les paramètres ont été soigneusement choisis.
+Les paramètres ont été soigneusement choisis
+afin d'éviter des classes aux valeurs attendues nulles
+qui auraient une influence énorme sur le test du $\chi^2$.
 
 Soit $r$ la longueur d'un gap, les valeurs attendues en fonction de $r$ sont les suivantes : 
 \begin{center}
@@ -213,7 +215,7 @@ $0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $10$ & $\geq 11$ & $
 
 \newpage
 Avec des chiffres générés avec le module \texttt{random} de Python,
-on obtient $95\%$ de réussite.
+on obtient $95\%$ de réussite :
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
@@ -246,12 +248,13 @@ $0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $10$ & $\geq 11$ & $
 On essaie de collectionner $s$ coupons (par défaut 10 -- un par chiffre)
 jusqu'à maximum $m$ tirages.
 On crée une classe par nombre de tirages nécessaires pour les collectionner tous.
-Il n'y en aura pas pour moins de $s$ lancers puisqu'on veut obtenir
+Il n'y en aura jamais pour moins de $s$ lancers puisqu'on veut obtenir
 $s$ coupons différents.
 Une dernière classe regroupe les longueurs strictement supérieures à $m$.
 Le test est répété $t$ fois sur des séquences consécutives dans le fichier.
 
-Soit $l$ le nombre de lancers, les résultats théoriques attendu sont les suivants :
+Soit $l$ le nombre de lancers, les résultats théoriques attendus
+sont les suivants :
 
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|}
@@ -354,7 +357,7 @@ $d=10$ chiffres qui forment ensemble un (grand) nombre entier.
 Le multiplicateur du générateur est un nombre premier de 10 chiffres testé
 à l'aide de l'outil \texttt{factor} issu des \textit{GNU coreutils}.
 L'incrément a été fixé à 42 de façon totalement arbitraire.
-Le module vaut $2^{20}$ ce qui permet de calculer rapidement par masquage
+Le module vaut $2^{20}$, ce qui permet de calculer rapidement par masquage
 le reste de la division.
 Les chiffres générés sont uniquement le premier dans les décimales de chaque
 valeur de départ divisée par $m$.
@@ -363,7 +366,7 @@ c'est un rationnel dans $]0,1[$ qui est utilisé.
 
 La position de départ dans le fichier contenant le million de décimales
 est déterminée par la date en secondes. Lorsqu'on arrive au bout de ce fichier,
-on recommence au début.
+on recommence depuis le début.
 
 Les résultats des tests sur les chiffres générés avec les mêmes paramètres
 qu'à la section précédente se trouvent à la figure \ref{fig:genD}.
@@ -382,10 +385,13 @@ Coupons & 95\% & 94\% & <
 
 \subsection{Tests}
 %FIXME
-Nous allons réitérer les mêmes tests que nous avons réalisés sur les décimales de $\pi$ et sur des chiffres générés pas la fonction random de python mais cette fois-ci sur des nombres générés à l'aide de notre générateur.
+Nous allons réitérer les mêmes tests que nous avons réalisés sur les décimales
+de $\pi$ et sur des chiffres générés par le module \texttt{random} de Python
+mais cette fois-ci sur des nombres générés à l'aide de notre générateur.
 Pour reproduire ces tests, il suffit de reprendre les commandes qui ont été utilisées dans les sections précédentes.
 
-\textbf{Rappel :} Les paramètres restant inchangés on compare les résultats générés aux valeurs théoriques citées précédemment.
+\textbf{Rappel :} Les paramètres restant inchangés, on compare
+les résultats générés aux valeurs théoriques citées précédemment.
 \subsubsection{Poker}
 
 \begin{center}
@@ -440,7 +446,7 @@ Nous avons $98\%$ de réussite pour le test du Poker.
 \newpage
 \subsubsection{Gap}
 
-Les résultats obtenus en réalisant plusieurs tests de Gap sur des nombres issus
+Les résultats obtenus en réalisant plusieurs tests du Gap sur des nombres issus
 de notre générateur sont les suivants :
 
 \begin{center}
@@ -475,8 +481,8 @@ On a ici un taux de réussite de $85\%$.
 \newpage
 \subsection{Coupons}
 
-Nous terminons par la réalisation plusieurs autres tests de coupons mais
-cette fois sur les nombres obtenus avec notre générateur.
+Nous terminons par la réalisation de plusieurs autres tests de coupons mais
+cette fois-ci sur les nombres obtenus avec notre générateur.
 
 On obtient un taux de réussite de $94\%$ sur les résultats suivants :
 
