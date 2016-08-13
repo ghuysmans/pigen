@@ -22,5 +22,5 @@ while True:
 	mask=m*2-1
 	k=100
 	for _ in range(k):
-		seed = (a*seed + c) and mask
+		seed = (a*seed + c) & mask
 		sys.stdout.write(str(int(float(seed)/m*10)))
