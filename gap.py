@@ -41,7 +41,7 @@ def probabilities(a,b,r):
 	return prob_table
 
 def expected(a, b, r, s):
-	return map(lambda x: s*x, probabilities(a, b, r))
+	return map(lambda x: s*(b-a)*x, probabilities(a, b, r))
 
 
 if __name__ == "__main__":
