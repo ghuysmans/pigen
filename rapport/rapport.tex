@@ -38,7 +38,44 @@ nous donnera un histogramme parfaitement régulier alors qu'elle est déjà loin
 de la définition intuitive que l'on peut avoir du hasard.
 Nous avons donc implémenté une batterie de tests qui se concentrent sur d'autres aspects de l'uniformité.
 
-\newpage
+\subsection{Test du Gap}
+On décide d'un intervalle $[a,b] \subset [0,1]$,
+on génère une séquence de nombres réels en regroupant les décimales par 5
+et on marque ceux compris dans cet intervalle. Le but du test est de regarder les
+distances entre deux nombres marqués successifs.
+
+Soit $r$ la longueur d'un gap,
+les valeurs attendues en fonction de $r$ sont les suivantes :
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c}
+$0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $\geq 10$ \\ \hline
+50000 & 25000 & 12500 & 6250 & 3125 & 1562.5 & 781.25 & 390.625 &
+	195.3125 & 97.65625 & 97.65625
+\end{tabular}
+\end{center}
+
+\texttt{./gap.py 10 200000 1 <pi6.txt} donne :
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
+$0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $\geq 10$ &
+	$\chi^2$ & Probabilité \\ \hline
+49857 & 24928 & 12627 & 6271 & 3128 & 1569 & 750 & 381 & 234 & 83 & 85 &
+	15 &  0.13
+\end{tabular}
+\end{center}
+
+Avec des chiffres générés avec le module \texttt{random} de Python,
+cela fonctionne également :
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
+$0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $\geq 10$ &
+	$\chi^2$ & Probabilité \\ \hline
+49680 & 25022 & 12509 & 6279 & 3138 & 1578 & 765 & 377 & 201 & 109 & 102 &
+	4.91 &  0.90
+\end{tabular}
+\end{center}
+
+
 \subsection{Test du Poker}
 En utilisant les 10 chiffres dans les décimales fournies et avec une main de 10,
 on se retrouve avec au moins une classe vide : celle du poker. En effet, la
@@ -79,85 +116,6 @@ exécuté ce même test sur des nombres générés à partir du module \texttt{r
 1 seule & 2 $\neq$ & 3 $\neq$ & 4 $\neq$ & 5 $\neq$
 	& $\chi^2$ & Probabilité \\ \hline
 343 & 19175 & 95521 & 77274 & 7687 &  7.01 &  0.14
-\end{tabular}
-\end{center}
-
-
-\subsection{Test du Gap}
-%FIXME autres paramètres
-On décide d'un intervalle $[a,b] \subset [0,1]$,
-on génère une séquence de nombres (nous avons décidé de regrouper des décimales)
-et on marque ceux compris dans cet intervalle. Le but du test est de regarder les
-distances entre deux nombres marqués successifs.
-Les paramètres ont été soigneusement choisis
-afin d'éviter des classes aux valeurs attendues nulles
-qui auraient une influence énorme sur le test du $\chi^2$.
-
-Soit $r$ la longueur d'un gap, les valeurs attendues en fonction de $r$ sont les suivantes : 
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-$0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $10$ & $\geq 11$\\ \hline
-2500.0 & 1250.0 & 625.0 & 312.5 & 156.25 & 78.13 & 39.06 & 19.53 & 9.77 & 4.88 & 2.44 & 1.22\\ \hline
-\end{tabular}
-\end{center}
-
-\texttt{./gap.py 11 10000 20 <pi6.txt} fonctionne à 85\% :
-
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-$0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $10$ & $\geq 11$ & $\chi^2$ & Probabilité \\ \hline
-2512 & 1211 & 618 & 315 & 159 & 97 & 34 & 18 & 12 & 5 & 1 & 2 &  8.62 &  0.66\\ \hline
-2519 & 1265 & 654 & 305 & 160 & 85 & 27 & 16 & 9 & 5 & 1 & 0 &  9.04 &  0.62\\ \hline
-2505 & 1230 & 648 & 316 & 154 & 66 & 42 & 15 & 14 & 6 & 2 & 3 &  9.17 &  0.61\\ \hline
-2462 & 1247 & 666 & 321 & 144 & 62 & 47 & 16 & 13 & 2 & 1 & 5 & 25.37 &  0.01\\ \hline
-2453 & 1249 & 647 & 312 & 151 & 74 & 41 & 14 & 13 & 3 & 4 & 5 & 18.21 &  0.08\\ \hline
-2458 & 1260 & 629 & 309 & 171 & 66 & 31 & 29 & 14 & 0 & 4 & 2 & 18.59 &  0.07\\ \hline
-2487 & 1292 & 612 & 333 & 162 & 66 & 42 & 20 & 5 & 2 & 2 & 1 &  9.57 &  0.57\\ \hline
-2538 & 1243 & 627 & 335 & 159 & 86 & 24 & 12 & 15 & 2 & 0 & 2 & 19.24 &  0.06\\ \hline
-2566 & 1278 & 613 & 304 & 134 & 85 & 42 & 24 & 8 & 4 & 0 & 3 & 13.36 &  0.27\\ \hline
-2422 & 1254 & 667 & 283 & 155 & 76 & 48 & 20 & 14 & 6 & 1 & 1 & 13.16 &  0.28\\ \hline
-2480 & 1230 & 580 & 314 & 142 & 90 & 55 & 17 & 21 & 4 & 4 & 1 & 27.78 &  0.00\\ \hline
-2420 & 1223 & 627 & 319 & 159 & 84 & 49 & 21 & 10 & 3 & 3 & 1 &  7.31 &  0.77\\ \hline
-2441 & 1304 & 664 & 310 & 165 & 72 & 25 & 21 & 11 & 2 & 0 & 0 & 17.84 &  0.09\\ \hline
-2567 & 1234 & 631 & 319 & 168 & 63 & 42 & 18 & 13 & 1 & 1 & 0 & 12.58 &  0.32\\ \hline
-2447 & 1253 & 628 & 310 & 164 & 78 & 36 & 23 & 11 & 4 & 4 & 1 &  3.76 &  0.98\\ \hline
-2516 & 1212 & 635 & 325 & 163 & 72 & 37 & 12 & 11 & 7 & 4 & 3 & 10.36 &  0.50\\ \hline
-2483 & 1241 & 618 & 327 & 136 & 93 & 35 & 25 & 9 & 4 & 3 & 3 & 11.28 &  0.42\\ \hline
-2569 & 1247 & 602 & 288 & 174 & 69 & 36 & 19 & 13 & 9 & 5 & 2 & 15.74 &  0.15\\ \hline
-2484 & 1251 & 623 & 329 & 164 & 87 & 32 & 13 & 6 & 4 & 1 & 4 & 14.62 &  0.20\\ \hline
-2532 & 1205 & 635 & 297 & 142 & 98 & 25 & 28 & 12 & 10 & 2 & 3 & 26.60 &  0.01\\ \hline
-\end{tabular}
-\end{center}
-
-\newpage
-Avec des chiffres générés avec le module \texttt{random} de Python,
-on obtient $95\%$ de réussite :
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-$0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $10$ & $\geq 11$ & $\chi^2$ & Probabilité \\ \hline
-2582 & 1236 & 618 & 322 & 121 & 89 & 39 & 18 & 11 & 8 & 4 & 2 & 16.44 &  0.13\\ \hline
-2482 & 1269 & 655 & 305 & 164 & 86 & 25 & 12 & 5 & 7 & 3 & 3 & 17.15 &  0.10\\ \hline
-2455 & 1276 & 622 & 298 & 158 & 84 & 40 & 17 & 10 & 6 & 4 & 2 &  4.60 &  0.95\\ \hline
-2406 & 1291 & 620 & 322 & 161 & 70 & 39 & 17 & 13 & 5 & 2 & 3 & 10.27 &  0.51\\ \hline
-2490 & 1207 & 636 & 300 & 158 & 88 & 41 & 24 & 12 & 3 & 0 & 4 & 14.61 &  0.20\\ \hline
-2500 & 1237 & 608 & 316 & 159 & 88 & 35 & 16 & 14 & 7 & 2 & 2 &  6.33 &  0.85\\ \hline
-2486 & 1303 & 590 & 311 & 140 & 90 & 39 & 23 & 9 & 7 & 3 & 1 &  9.55 &  0.57\\ \hline
-2439 & 1228 & 683 & 301 & 165 & 66 & 40 & 19 & 11 & 3 & 4 & 2 & 12.46 &  0.33\\ \hline
-2532 & 1238 & 618 & 336 & 160 & 63 & 43 & 16 & 6 & 6 & 2 & 4 & 14.54 &  0.20\\ \hline
-2463 & 1255 & 645 & 300 & 160 & 67 & 39 & 25 & 12 & 3 & 4 & 2 &  7.64 &  0.74\\ \hline
-2359 & 1220 & 640 & 322 & 167 & 93 & 41 & 15 & 8 & 5 & 2 & 4 & 20.77 &  0.04\\ \hline
-2487 & 1302 & 616 & 289 & 170 & 66 & 46 & 17 & 8 & 7 & 4 & 1 & 11.05 &  0.44\\ \hline
-2496 & 1212 & 642 & 325 & 154 & 82 & 41 & 12 & 12 & 4 & 3 & 2 &  6.64 &  0.83\\ \hline
-2462 & 1200 & 625 & 320 & 152 & 92 & 39 & 21 & 17 & 3 & 3 & 1 & 11.70 &  0.39\\ \hline
-2537 & 1246 & 604 & 340 & 151 & 68 & 40 & 21 & 7 & 3 & 6 & 2 & 12.50 &  0.33\\ \hline
-2552 & 1287 & 589 & 326 & 164 & 69 & 34 & 21 & 6 & 6 & 1 & 3 & 12.20 &  0.35\\ \hline
-2510 & 1276 & 636 & 313 & 142 & 75 & 42 & 19 & 8 & 4 & 3 & 2 &  3.54 &  0.98\\ \hline
-2463 & 1251 & 607 & 305 & 165 & 89 & 36 & 26 & 10 & 7 & 0 & 1 &  9.04 &  0.62\\ \hline
-2547 & 1255 & 637 & 298 & 158 & 72 & 38 & 12 & 14 & 6 & 4 & 2 &  8.82 &  0.64\\ \hline
-2438 & 1233 & 618 & 328 & 167 & 80 & 28 & 25 & 8 & 9 & 3 & 2 & 12.48 &  0.33\\ \hline
 \end{tabular}
 \end{center}
 
@@ -327,35 +285,14 @@ Les résultats obtenus en réalisant plusieurs tests du Gap sur des nombres issu
 de notre générateur sont les suivants :
 
 \begin{center}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-$0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $10$ & $\geq 11$ & $\chi^2$ & Probabilité \\ \hline
-2398 & 1186 & 692 & 324 & 164 & 80 & 39 & 16 & 10 & 1 & 3 & 2 & 19.83 &  0.05\\ \hline
-2435 & 1215 & 631 & 331 & 148 & 86 & 35 & 25 & 7 & 8 & 3 & 3 & 12.50 &  0.33\\ \hline
-2433 & 1297 & 608 & 342 & 140 & 84 & 39 & 22 & 6 & 5 & 1 & 1 & 11.60 &  0.39\\ \hline
-2576 & 1276 & 592 & 287 & 168 & 75 & 44 & 19 & 11 & 4 & 4 & 1 &  9.67 &  0.56\\ \hline
-2436 & 1223 & 603 & 358 & 161 & 82 & 32 & 23 & 6 & 5 & 6 & 0 & 19.71 &  0.05\\ \hline
-2542 & 1228 & 648 & 333 & 142 & 72 & 33 & 25 & 8 & 7 & 1 & 0 & 10.84 &  0.46\\ \hline
-2498 & 1274 & 601 & 313 & 184 & 73 & 43 & 22 & 6 & 1 & 0 & 0 & 15.56 &  0.16\\ \hline
-2552 & 1177 & 651 & 307 & 159 & 96 & 38 & 19 & 8 & 4 & 1 & 0 & 13.26 &  0.28\\ \hline
-2522 & 1260 & 657 & 325 & 150 & 66 & 35 & 16 & 5 & 2 & 6 & 3 & 17.41 &  0.10\\ \hline
-2532 & 1283 & 611 & 327 & 157 & 70 & 31 & 18 & 12 & 4 & 2 & 2 &  6.15 &  0.86\\ \hline
-2514 & 1227 & 570 & 323 & 164 & 87 & 37 & 29 & 8 & 5 & 3 & 3 & 14.83 &  0.19\\ \hline
-2602 & 1278 & 603 & 295 & 165 & 80 & 31 & 15 & 10 & 5 & 3 & 3 & 12.52 &  0.33\\ \hline
-2520 & 1189 & 663 & 305 & 163 & 74 & 34 & 20 & 10 & 6 & 4 & 3 & 10.65 &  0.47\\ \hline
-2594 & 1273 & 631 & 307 & 154 & 71 & 34 & 14 & 7 & 5 & 5 & 2 & 10.98 &  0.44\\ \hline
-2432 & 1231 & 662 & 322 & 160 & 75 & 35 & 25 & 7 & 5 & 1 & 1 &  8.46 &  0.67\\ \hline
-2502 & 1238 & 621 & 311 & 148 & 68 & 54 & 19 & 14 & 6 & 1 & 3 & 13.16 &  0.28\\ \hline
-2643 & 1309 & 650 & 284 & 149 & 63 & 35 & 21 & 5 & 2 & 1 & 3 & 25.83 &  0.01\\ \hline
-2548 & 1304 & 646 & 292 & 159 & 73 & 36 & 12 & 5 & 6 & 2 & 2 & 11.99 &  0.36\\ \hline
-2445 & 1291 & 636 & 330 & 152 & 74 & 28 & 14 & 14 & 5 & 4 & 1 & 11.63 &  0.39\\ \hline
-2472 & 1249 & 624 & 307 & 172 & 80 & 37 & 22 & 9 & 5 & 1 & 1 &  3.42 &  0.98\\ \hline
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
+$0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $\geq 10$ &
+	$\chi^2$ & Probabilité \\ \hline
+50191 & 25010 & 12601 & 6322 & 3159 & 1530 & 730 & 398 & 168 & 91 & 86 &
+	12.59 &  0.25
 \end{tabular}
 \end{center}
 
-On a ici un taux de réussite de $85\%$.
-
-\newpage
 \subsection{Coupons}
 
 Nous terminons par la réalisation de plusieurs autres tests de coupons mais
