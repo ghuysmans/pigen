@@ -6,6 +6,7 @@ def formatTex(tab):
 	list = " & ".join(str(x) for x in tab)
 	list += "\\\\ \\hline"
 	return list
+
 class Coupon(object):
 	def process(self, stream):
 		tab_length = [0 for _ in range(self.max_length-self.coupons+1)]
@@ -25,7 +26,6 @@ class Coupon(object):
 					return
 			tab_length[length-self.coupons] += 1
 		return tab_length
-
 	def probabilities(self):
 		l = []
 		fact = math.factorial(self.coupons)
@@ -59,27 +59,6 @@ def stir(k,r):
 		return 1
 	else:
 		return stir(k-1,r-1) + r*stir(k-1,r)
-
-def read(stream, k, n):
-	"""
-	Process n blocks of k digits from a stream.
-	Returns whether there is maybe more data.
-	"""
-	poker = Poker(k)
-	while n>0:
-		l = []
-		while len(l)<k:
-			c = stream.read(1)
-			if c == "":
-				return poker.classes, False
-			elif c.isdigit():
-				l.append(int(c))
-		poker.process(l)
-		n -= 1
-	return poker.classes, True
-
-def regroup(l):
-	return [sum(l[:4])+sum(l[-2:])] + l[4:-2]
 
 
 if __name__ == "__main__":
