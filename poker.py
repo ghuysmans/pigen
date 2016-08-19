@@ -96,7 +96,6 @@ if __name__ == "__main__":
 		l, cont = read(sys.stdin, args.k, args.n, args.d)
 		if cont:
 			chisq = chisquare(l, expected)
-			s = "%5.2f %5.2f" % (chisq.statistic, chisq.pvalue)
 			l.append("%5.2f" % chisq.statistic)
 			l.append("%5.2f" % chisq.pvalue)
 			print formatTex(l)
