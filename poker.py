@@ -14,6 +14,7 @@ class Poker(object):
 		count = 0 #different values = class
 		assert(len(digits) == self.k)
 		for digit in digits:
+			digit = digit / (10/self.d)
 			if not flags[digit]:
 				flags[digit] = True
 				count += 1
@@ -29,12 +30,12 @@ class Poker(object):
 			d = d - 1
 			dprod *= d
 		return l
-	def __init__(self, k):
+	def __init__(self, k, d):
 		"""
 		Create an object processing blocks of k digits.
 		"""
 		self.k = k
-		self.d = 10
+		self.d = d
 		assert(k>=self.d)
 		self.classes = [0 for _ in range(min(self.d, k))]
 
@@ -55,12 +56,12 @@ def stir(k,r):
 	else:
 		return stir(k-1,r-1) + r*stir(k-1,r)
 
-def read(stream, k, n):
+def read(stream, k, n, d):
 	"""
 	Process n blocks of k digits from a stream.
 	Returns whether there is maybe more data.
 	"""
-	poker = Poker(k)
+	poker = Poker(k, d)
 	while n>0:
 		l = []
 		while len(l)<k:
@@ -73,31 +74,27 @@ def read(stream, k, n):
 		n -= 1
 	return poker.classes, True
 
-def regroup(l):
-	return [sum(l[:4])+sum(l[-2:])] + l[4:-2]
-
 
 if __name__ == "__main__":
 	import sys
 	import argparse
 	parser = argparse.ArgumentParser()
-	parser.add_argument("k", type=int, help="block size: 10?")
-	parser.add_argument("n", type=int, help="test size: 1000?")
+	parser.add_argument("d", type=int, help="digits (2, 5, 10)")
+	parser.add_argument("k", type=int, help="hand size: at least d")
+	parser.add_argument("n", type=int, help="test count")
 	parser.add_argument("--alpha", type=float, help="alpha test value", default=0.05)
 	parser.add_argument("--decimals", action="store_true")
 	args = parser.parse_args()
 	if args.decimals:
 		clean(sys.stdin, ".")
 	cont=True
-	expected = map(lambda x: args.n*x, Poker(args.k).probabilities())
-	expected = regroup(expected)
+	expected = map(lambda x: args.n*x, Poker(args.k, args.d).probabilities())
 	count = 0
 	success = 0
 	print formatTex(expected)
 	while cont:
-		l, cont = read(sys.stdin, args.k, args.n)
+		l, cont = read(sys.stdin, args.k, args.n, args.d)
 		if cont:
-			l = regroup(l)
 			chisq = chisquare(l, expected)
 			s = "%5.2f %5.2f" % (chisq.statistic, chisq.pvalue)
 			l.append("%5.2f" % chisq.statistic)
