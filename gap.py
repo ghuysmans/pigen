@@ -37,11 +37,11 @@ def probabilities(a,b,r):
 	for _ in range(r-1):
 		acc *= (1-p)
 		prob_table.append(acc)
-	prob_table.append(acc*(1-p))
+	prob_table.append((acc*(1-p))/p)
 	return prob_table
 
 def expected(a, b, r, s):
-	return map(lambda x: s*x, probabilities(a, b, r))
+	return map(lambda x: s*(b-a)*x, probabilities(a, b, r))
 
 
 if __name__ == "__main__":
