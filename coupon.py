@@ -10,7 +10,8 @@ def formatTex(tab):
 class Coupon(object):
 	def process(self, stream):
 		tab_length = [0 for _ in range(self.max_length-self.coupons+1)]
-		for _ in range(self.n):
+		while True:
+			self.tests += 1
 			flags = [False for _ in range(self.coupons)]
 			count = 0 #different values = class
 			length = 0
@@ -23,9 +24,8 @@ class Coupon(object):
 						flags[n] = True
 						count += 1
 				elif not len(n):
-					return
+					return tab_length
 			tab_length[length-self.coupons] += 1
-		return tab_length
 	def probabilities(self):
 		l = []
 		fact = math.factorial(self.coupons)
@@ -35,11 +35,11 @@ class Coupon(object):
 			else:
 				l.append(stir(r-1, self.coupons-1) * float(fact) / pow(self.coupons,r))
 		return l
-	def __init__(self,n,nbr_of_coupons,max_length):
+	def __init__(self,nbr_of_coupons,max_length):
 		"""
 		Create an object processing blocks of k digits.
 		"""
-		self.n = n
+		self.tests = 0
 		self.coupons = nbr_of_coupons
 		self.max_length = max_length
 
@@ -65,32 +65,21 @@ if __name__ == "__main__":
 	import sys
 	import argparse
 	parser = argparse.ArgumentParser()
-	#FIXME better descriptions
-	parser.add_argument("n", type=int, help="coupons size: ?")
-	parser.add_argument("m", type=int, help="max length: 10?")
-	parser.add_argument("--s", type=int, help="nbr of coupons", default=10)
-	parser.add_argument("t", type=int, help="nbr of tests")
+	parser.add_argument("m", type=int, help="maximum sequence length (> 10)")
 	parser.add_argument("--decimals", action="store_true")
 	parser.add_argument("--alpha", type=float, help="alpha test value", default=0.05)
 	args = parser.parse_args()
-	count = 0
-	success = 0
 	if args.decimals:
 		clean(sys.stdin, ".")
-	coup = Coupon(args.n,args.s,args.m)
-	expected = map(lambda x: args.n*x, coup.probabilities())
+	coup = Coupon(10, args.m)
+	l = coup.process(sys.stdin)
+	expected = map(lambda x: coup.tests*x, coup.probabilities())
 	print formatTex(expected)
-	for _ in range(args.t):
-		l = coup.process(sys.stdin)
-		if l == None:
-			break
-		chisq = chisquare(l, expected)
-		s = "%5.2f %5.2f" % (chisq.statistic, chisq.pvalue)
-		l.append("%5.2f" % chisq.statistic)
-		l.append("%5.2f" % chisq.pvalue)
-		print formatTex(l)
-		#print l, expected, s
-		if chisq.pvalue >= args.alpha:
-			success += 1
-		count += 1
-	print "rate:", float(success)/count
+	chisq = chisquare(l, expected)
+	l.append("%5.2f" % chisq.statistic)
+	l.append("%5.2f" % chisq.pvalue)
+	print formatTex(l)
+	if chisq.pvalue >= args.alpha:
+		print "success"
+	else:
+		print "failure"
