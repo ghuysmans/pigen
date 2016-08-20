@@ -32,13 +32,25 @@ attendues pour une séquence uniforme)
 est fixée à $\alpha=0.05$, soit 5\%.
 
 \subsection{Histogramme}
-Un histogramme peut nous donner un premier aperçu sur la répartition
-du premier million de décimales du nombre $\pi$.
-Cependant un histogramme n'a aucune valeur scientifique \textit{per se}.
-On peut facilement comprendre que la séquence [0,1,2,3,4,5,6,7,8,9]
+Un histogramme peut nous donner un premier aperçu de la répartition
+du premier million de décimales du nombre $\pi$, en voici un tableau
+où chaque chiffre devrait apparaître 100000 fois :
+
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c}
+0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & $\chi^2$ & Pr \\ \hline
+99959 & 99758 & 100026 & 100230 & 100230 &
+100359 & 99548 & 99800 & 99985 & 100106 &
+5.51 & 0.79
+\end{tabular}
+\end{center}
+
+Cependant un histogramme n'a aucune valeur \textit{per se} :
+on peut facilement comprendre que la séquence [0,1,2,3,4,5,6,7,8,9]
 nous donnera un histogramme parfaitement régulier alors qu'elle est déjà loin
 de la définition intuitive que l'on peut avoir du hasard.
-Nous avons donc implémenté une batterie de tests qui se concentrent sur d'autres aspects de l'uniformité.
+Nous avons donc implémenté une batterie de tests qui se concentrent
+sur d'autres aspects de l'uniformité.
 
 \subsection{Test du Gap}
 On décide d'un intervalle $[a,b] \subset [0,1]$,
