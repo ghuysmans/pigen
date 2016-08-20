@@ -26,13 +26,15 @@ poissonniennes, exponentielles, etc. se basent sur un générateur uniforme et
 c'est ce que nous essaierons de construire ici. 
 
 \section{Tests}
-L'erreur de première espèce (risque de confirmer à tort l'hypothèse de même loi)
+L'erreur de première espèce (risque de confirmer à tort l'hypothèse de même loi
+lorsque nous comparons les valeurs mesurées expérimentalement et les valeurs
+attendues pour une séquence uniforme)
 est fixée à $\alpha=0.05$, soit 5\%.
 
 \subsection{Histogramme}
 Un histogramme peut nous donner un premier aperçu sur la répartition
 du premier million de décimales du nombre $\pi$.
-Cependant un histogramme n'a aucune valeur scientifique \textit{per se}. 
+Cependant un histogramme n'a aucune valeur scientifique \textit{per se}.
 On peut facilement comprendre que la séquence [0,1,2,3,4,5,6,7,8,9]
 nous donnera un histogramme parfaitement régulier alors qu'elle est déjà loin
 de la définition intuitive que l'on peut avoir du hasard.
@@ -82,10 +84,10 @@ on se retrouve avec au moins une classe vide : celle du poker. En effet, la
 probabilité d'obtenir une main avec 10 chiffres identiques est de $10^{-9}$
 (le premier chiffre peut être n'importe lequel mais il n'y a ensuite plus
 qu'une possibilité à chaque fois). Avec $10^6/10=10^5$ mains, on obtient en
-moyenne $10^{-4}=0,0001$ occurrence, ce qui n'arrivera jamais en pratique.
+moyenne $10^{-4}=0.0001$ occurrence, ce qui n'arrivera jamais en pratique.
 Pour pallier à ce problème, on regroupe à l'entrée les chiffres : 0 avec 1,
-2 avec 3, etc. Cela semble raisonnable puisque les chiffres sont répartis
-de manière uniforme. Ainsi, nous utiliserons 5~classes qui correspondront
+2 avec 3, etc. Cela semble raisonnable puisque les chiffres sont bien répartis :
+l'histogramme est plat. Ainsi, nous utiliserons 5~classes qui correspondront
 à chaque fois au nombre de chiffres différents obtenus après $k=5$ tirages.
 On prend $n$ mains pour un test. Afin d'utiliser tout le fichier de données,
 nous choisissons $n=200000$ puisque $n$ mains de $k$ chiffres font 1 million.
