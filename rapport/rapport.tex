@@ -59,6 +59,7 @@ on génère une séquence de nombres réels en regroupant les décimales par 5
 et on marque ceux compris dans cet intervalle. Le but du test est de regarder les
 distances entre deux nombres marqués successifs.
 
+\newpage
 Soit $r$ la longueur d'un gap,
 les valeurs attendues en fonction de $r$ sont les suivantes :
 \begin{center}
@@ -68,6 +69,19 @@ $0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $\geq 10$ \\ \hline
 	195.3125 & 97.65625 & 97.65625
 \end{tabular}
 \end{center}
+
+Les probabilités sont calculées comme suit,
+avec $p=b-a$ la probabilité de tomber dans $[a,b]$ :
+\begin{align*}
+	l_0 &= p \\
+	l_1 &= p(p-1) \\
+	& \dots \\
+	l_i &= p(p-1)^i\\
+	l_{>i} &= (p-1)^{i+1}
+\end{align*}
+
+Il faut les multiplier par le nombre de gaps ($np$ avec $n$ le nombre de
+nombres testés, soit $10^6/5$) pour obtenir le nombre d'occurrences attendues.
 
 \texttt{./gap.py 10 200000 1 <pi6.txt} donne :
 \begin{center}
@@ -113,6 +127,23 @@ On va comparer les résultats de nos tests aux valeurs théoriques suivantes :
 \end{tabular}
 \end{center}
 
+Les probabilités sont calculées comme suit
+avec $r$ le nombre de classes différentes :
+\begin{align*}
+	P_r = \frac {\left\{\begin{array}{l}k\\r\end{array}\right\}
+		d(d-1)\dots(d-r+1)}
+	{d^k}
+	\qquad (r \leq d)
+\end{align*}
+
+\begin{figure}[t]
+\begin{align*}
+	{k \brace r} &= {k-1 \brace r-1} + r{k-1 \brace r} \\
+	{k \brace 1} &= {k \brace k} = 1
+\end{align*}
+\caption{Nombre de Stirling}
+\end{figure}
+
 \texttt{./poker.py 5 5 200000 <pi6.txt} produit les résultats suivants :
 \begin{center}
 \begin{tabular}{l|l|l|l|l|c|c}
@@ -150,6 +181,26 @@ Les résultats attendus sont les suivants :
 24.2715 & 109.2221 & 280.3368 & 540.6497 & 872.5685 & 65058.9510
 \end{tabular}
 \end{center}
+
+Les probabilités sont calculées ainsi, après $r$ lancers :
+\begin{itemize}
+	\item Obtenir au moins $d$ faces différentes est :
+		\[
+			p_r = {r \brace d} \frac{d!}{d^r}
+		\]
+	\item Ne pas obtenir toutes les faces est le complémentaire :
+		\[
+			q_r = 1 - {r \brace d} \frac{d!}{d^r}
+		\]
+	\item Devoir lancer le dé $r$ fois
+		en remarquant que $q_{r} \subset q_{r-1}$ :
+		\[
+			S_r = \frac{d!}{d^r} {r-1 \brace d-1}
+		\]
+\end{itemize}
+
+Il faut ensuite les multiplier par le nombre de tests effectués, il est pour
+cela nécessaire de compter les séquences détectées (parfois tronquées).
 
 \texttt{./coupon.py 15 <pi6.txt} donne :
 \begin{center}
