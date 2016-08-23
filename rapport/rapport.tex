@@ -80,8 +80,9 @@ avec $p=b-a$ la probabilité de tomber dans $[a,b]$ :
 	l_{>i} &= (p-1)^{i+1}
 \end{align*}
 
-Il faut les multiplier par le nombre de gaps ($np$ avec $n$ le nombre de
-nombres testés, soit $10^6/5$) pour obtenir le nombre d'occurrences attendues.
+Il faut les multiplier par le nombre de gaps
+($np$ avec $n$ le nombre de nombres testés, soit $p\times10^6/5$)
+pour obtenir le nombre d'occurrences attendues.
 
 \texttt{./gap.py 10 200000 1 <pi6.txt} donne :
 \begin{center}
@@ -108,7 +109,7 @@ $0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $\geq 10$ &
 \subsection{Test du Poker}
 En utilisant les 10 chiffres dans les décimales fournies et avec une main de 10,
 on se retrouve avec au moins une classe vide : celle du poker. En effet, la
-probabilité d'obtenir une main avec 10 chiffres identiques est de $10^{-9}$
+probabilité d'obtenir une main avec 10~chiffres identiques est de $10^{-9}$
 (le premier chiffre peut être n'importe lequel mais il n'y a ensuite plus
 qu'une possibilité à chaque fois). Avec $10^6/10=10^5$ mains, on obtient en
 moyenne $10^{-4}=0.0001$ occurrence, ce qui n'arrivera jamais en pratique.
@@ -184,11 +185,11 @@ Les résultats attendus sont les suivants :
 
 Les probabilités sont calculées ainsi, après $r$ lancers :
 \begin{itemize}
-	\item Obtenir au moins $d$ faces différentes est :
+	\item Obtenir au moins $d$ faces différentes :
 		\[
 			p_r = {r \brace d} \frac{d!}{d^r}
 		\]
-	\item Ne pas obtenir toutes les faces est le complémentaire :
+	\item Ne pas obtenir toutes les faces est l'événement complémentaire :
 		\[
 			q_r = 1 - {r \brace d} \frac{d!}{d^r}
 		\]
@@ -199,7 +200,8 @@ Les probabilités sont calculées ainsi, après $r$ lancers :
 		\]
 \end{itemize}
 
-Il faut ensuite les multiplier par le nombre de tests effectués, il est pour
+Il faut ensuite multiplier ces probabilités par
+le nombre de tests effectués, il est pour
 cela nécessaire de compter les séquences détectées (parfois tronquées).
 
 \texttt{./coupon.py 15 <pi6.txt} donne :
@@ -210,8 +212,8 @@ cela nécessaire de compter les séquences détectées (parfois tronquées).
 \end{tabular}
 \end{center}
 
-Les mêmes tests réalisés sur les nombres générés par \texttt{random}
-nous donnent ceci :
+Le même test réalisé sur les nombres générés par \texttt{random}
+nous donne ceci :
 \begin{center}
 \begin{tabular}{c|c|c|c|c|c|c|c}
 10 & 11 & 12 & 13 & 14 & $\geq 15$ & $\chi^2$ & Probabilité \\ \hline
