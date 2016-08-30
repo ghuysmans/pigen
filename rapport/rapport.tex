@@ -17,8 +17,8 @@ Le CPU d'un ordinateur est entièrement déterministe. Certains algorithmes
 utilisés par exemple en intelligence artificielle ne le sont pas et auront de
 bien meilleurs résultats lorsqu'ils pourront explorer <<~au hasard~>> différentes
 zones de leur espace de recherche. Différentes méthodes existent afin de générer
-des nombres pseudo-aléatoires (ils ne le sont pas vraiment puisqu'ils sont
-implémentés avec des algorithmes parfaitement déterministes). La seule donnée
+des nombres pseudo-aléatoires (puisqu'elles sont
+implémentées avec des algorithmes parfaitement déterministes). La seule donnée
 peu prévisible que nous choisissons d'utiliser est le moment auquel le générateur
 est lancé.
 Les méthodes vues au cours afin de générer des nombres selon des lois normales,
@@ -45,11 +45,14 @@ où chaque chiffre devrait apparaître 100000 fois :
 5.51 & 0.79
 \end{tabular}
 \end{center}
+%TODO expliquer la p-value sur un graphique
+%surface exprimée en % du total après la valeur (en abscisse bien sûr)
 
 Cependant un histogramme n'a aucune valeur \textit{per se} :
 on peut facilement comprendre que la séquence [0,1,2,3,4,5,6,7,8,9]
 nous donnera un histogramme parfaitement régulier alors qu'elle est déjà loin
 de la définition intuitive que l'on peut avoir du hasard.
+%TODO expliquer que cette séquence est probable mais pas sa répétition...
 Nous avons donc implémenté une batterie de tests qui se concentrent
 sur d'autres aspects de l'uniformité.
 
@@ -58,6 +61,8 @@ On décide d'un intervalle $[a,b] \subset [0,1]$,
 on génère une séquence de nombres réels en regroupant les décimales par 5
 et on marque ceux compris dans cet intervalle. Le but du test est de regarder les
 distances entre deux nombres marqués successifs.
+%TODO plus une façon de générer des nombres ça (période 1M)
+%TODO expliquer qu'il est possible de classer par chiffre, simplement
 
 \newpage
 Soit $r$ la longueur d'un gap,
@@ -72,6 +77,7 @@ $0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $\geq 10$ \\ \hline
 
 Les probabilités sont calculées comme suit,
 avec $p=b-a$ la probabilité de tomber dans $[a,b]$ :
+%TODO donner les valeurs choisies (0 et 0.5)
 \begin{align*}
 	l_0 &= p \\
 	l_1 &= p(1-p) \\
@@ -211,6 +217,7 @@ cela nécessaire de compter les séquences détectées (parfois tronquées).
 25 & 91 & 287 & 535 & 862 & 65085 &  3.42 &  0.64
 \end{tabular}
 \end{center}
+%TODO dernière classe encore trop grande
 
 Le même test réalisé sur les nombres générés par \texttt{random}
 nous donne ceci :
@@ -284,11 +291,14 @@ cette fois sur les nombres obtenus avec notre générateur.
 29 & 103 & 274 & 574 & 923 & 68232 &  3.17 &  0.67
 \end{tabular}
 \end{center}
+%TODO expliquer que les résultats théoriques sont != car nombre != de séquences
 
 
 \section{Conclusion}
 Les résultats sont tout à fait corrects et notre générateur semble faire
 au moins aussi bien que celui de Python pour la génération de séries de nombres
 pseudo-aléatoires uniformes.
+%TODO expliquer que la p-value n'a pas vraiment de sens : réussi c'est réussi
+%TODO évaluer la période du nouveau générateur et la comparer à celle de Python
 
 \end{document}
