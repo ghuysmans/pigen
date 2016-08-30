@@ -74,10 +74,10 @@ Les probabilités sont calculées comme suit,
 avec $p=b-a$ la probabilité de tomber dans $[a,b]$ :
 \begin{align*}
 	l_0 &= p \\
-	l_1 &= p(p-1) \\
+	l_1 &= p(1-p) \\
 	& \dots \\
-	l_i &= p(p-1)^i\\
-	l_{>i} &= (p-1)^{i+1}
+	l_i &= p(1-p)^i\\
+	l_{>i} &= (1-p)^{i+1}
 \end{align*}
 
 Il faut les multiplier par le nombre de gaps
@@ -277,8 +277,6 @@ $0$ & $1$ & $2$ & $3$ & $4$ & $5$ & $6$ & $7$ & $8$ & $9$ & $\geq 10$ &
 
 Nous terminons par la réalisation de plusieurs autres tests de coupons mais
 cette fois sur les nombres obtenus avec notre générateur.
-
-On obtient un taux de réussite de $94\%$ sur les résultats suivants :
 
 \begin{center}
 \begin{tabular}{c|c|c|c|c|c|c|c}
